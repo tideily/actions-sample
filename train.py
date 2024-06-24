@@ -7,7 +7,7 @@ from keras.layers import Dense
 from keras.models import Sequential
 
 
-def load_data():
+def load_data(single_batch=False):
     (X_train, y_train), (X_test, y_test) = datasets.mnist.load_data()
 
     X_train = X_train.reshape(-1, 784)
@@ -15,6 +15,9 @@ def load_data():
 
     X_train = X_train / 255.0
     X_test = X_test / 255.0
+
+    if single_batch:
+        return X_train[:32], y_train[:32], X_test, y_test
 
     return X_train, y_train, X_test, y_test
 
@@ -35,13 +38,13 @@ def build_model():
     return model
 
 
-def train():
+def train(single_batch=False):
     model = build_model()
     model.compile(
         optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"]
     )
 
-    X_train, y_train, X_test, y_test = load_data()
+    X_train, y_train, X_test, y_test = load_data(single_batch)
 
     model.fit(
         X_train,
@@ -55,5 +58,5 @@ def train():
     return model
 
 
-model = train()
+model = train(single_batch=True)
 model.save("model.keras")
