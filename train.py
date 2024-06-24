@@ -46,7 +46,7 @@ def train(single_batch=False):
 
     X_train, y_train, X_test, y_test = load_data(single_batch)
 
-    model.fit(
+    history = model.fit(
         X_train,
         y_train,
         batch_size=32,
@@ -55,8 +55,8 @@ def train(single_batch=False):
         validation_data=(X_test, y_test),
     )
 
-    return model
+    return model, history  # Modified to return both model and its training history
 
 
-model = train(single_batch=True)
+model, history = train(single_batch=True)
 model.save("model.keras")

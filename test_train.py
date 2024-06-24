@@ -1,5 +1,5 @@
-from train import load_data
-
+from train import load_data, build_model, train
+import numpy as np
 
 def test_load_data_loads_images():
     X_train, y_train, X_test, y_test = load_data()
@@ -22,3 +22,15 @@ def test_load_data_scales_images():
 
     assert X_train.min() >= 0 and X_train.max() <= 1
     assert X_test.min() >= 0 and X_test.max() <= 1
+
+def test_build_model_creates_expected_model():
+    model = build_model()
+    assert model.layers[0].input_shape == (None, 784), "Input layer shape is incorrect"
+    assert model.layers[-1].output_shape == (None, 10), "Output layer shape is incorrect"
+    assert len(model.layers) == 4, "Number of layers is incorrect"
+
+def test_train_with_single_batch_trains_model():
+    model, history = train(single_batch=True)
+    assert model is not None, "Model should not be None"
+    assert 'accuracy' in history.history, "Training history should contain accuracy"
+    assert len(history.history['accuracy']) > 0, "Training history should have at least one accuracy entry"
