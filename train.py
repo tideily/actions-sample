@@ -38,7 +38,7 @@ def build_model():
     return model
 
 
-def train(single_batch=False):
+def fit(single_batch=False):
     model = build_model()
     model.compile(
         optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"]
@@ -55,8 +55,4 @@ def train(single_batch=False):
         validation_data=(X_test, y_test),
     )
 
-    return model, history  # Modified to return both model and its training history
-
-
-model, history = train(single_batch=True)
-model.save("model.keras")
+    return model, history
