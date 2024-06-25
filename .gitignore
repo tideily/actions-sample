@@ -1,3 +1,6 @@
 __pycache__
 .venv
 *.keras
+# GitHub Actions workflow logs and temporary files
+*.log
+temp/
