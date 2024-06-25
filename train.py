@@ -50,7 +50,7 @@ def fit(single_batch=False):
         X_train,
         y_train,
         batch_size=32,
-        epochs=100,
+        epochs=5,
         verbose=1,
         validation_data=(X_test, y_test),
     )
